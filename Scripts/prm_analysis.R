@@ -10,37 +10,10 @@ library(readxl)
 library(readr)
 library(ggplot2)
 
-
+# Cleaned csvs in excel before importing into R
 # PRM Refugee Admissions Report
-prm_refugee_admissions <- read_xlsx("Spreadsheets/PRM/PRM Refugee Admissions Report 2024.xlsx")
-
-prm_sheets <- lapply(excel_sheets("Spreadsheets/PRM/PRM Refugee Admissions Report 2024.xlsx"), 
-                     read_excel, 
-                     path = "Spreadsheets/PRM/PRM Refugee Admissions Report 2024.xlsx")
-prm_sheet_names <- excel_sheets("Spreadsheets/PRM/PRM Refugee Admissions Report 2024.xlsx")
-for (i in seq_along(prm_sheet_names)) {
-  write.csv(prm_sheets[[i]], file = paste0("Spreadsheets/PRM/", prm_sheet_names[i], ".csv"), row.names = FALSE)
-} # yearly sheets unnecessary for current level of analysis, but saved just in case
-
-
-# Cleaning the cumulative sheet
-prm_cumulative <- read.csv("Spreadsheets/PRM/Cumulative Summary.csv", skip = 9) %>%
-  select(-"NA..2")
-prm_cumulative_header <- prm_cumulative[1:3, ] %>%
-  t() %>%
-  as.data.frame() %>%
-  mutate(merged = apply(., 1, function (x) paste(na.omit(x), collapse = " ")))
-  final_header <- prm_cumulaive_header$merged
-prm_cumulative_clean <- prm_cumulative[-(1:3), ]
-names(prm_cumulative_clean) <- final_header
-prm_cumulative_no_footer <- prm_cumulative_clean[-(52:55), ] %>%
+prm_refugee_admissions <- read.csv("Spreadsheets/PRM/cumulative_summary.csv") %>%
   clean_names()
-write.csv(prm_cumulative_no_footer, "Spreadsheets/PRM/cleaned_cumalative_summary.csv", row.names = FALSE)
-
-
-
-
-
 
 # Creating df for presidential admins
 pres_admins <- data.frame(
@@ -49,9 +22,8 @@ pres_admins <- data.frame(
   end_year = c(1976, 1980, 1988, 1992, 2000, 2008, 2016, 2020, 2024)
 )
 
-
 # Making numeric and pivoting
-prm_summary <- prm_cumulative_no_footer %>%
+prm_summary <- prm_refugee_admissions %>%
   mutate(across(everything(), ~as.numeric(.)))
 prm_long <- prm_summary %>%
   pivot_longer(
@@ -60,17 +32,16 @@ prm_long <- prm_summary %>%
     values_to = "Admissions"
   )
 
-
 # Line colors
 region_colors <- c(
-  africa = "#D55E00",
-  asia = "#0072B2",
-  europe_central_asia = "#F0E442",
-  former_soviet_union = "#CC79A7",
-  kosovo = "#999999",
-  latin_america_caribbean = "#56B4E9",
-  near_east_south_asia = "#009E73",
-  psi = "#E69F00",
+  africa = "#e41a1c",
+  asia = "#377eb8",
+  europe_central_asia = "#ffff33",
+  former_soviet_union = "#984ea3",
+  kosovo = "#a65628",
+  latin_america_caribbean = "#f781bf",
+  near_east_south_asia = "#4daf4a",
+  psi = "#ff7f00",
   total = "#000000"
 )
 
@@ -248,3 +219,37 @@ bar_pres_avgs <- ggplot(pres_yrly_avg) +
   theme_minimal()
 bar_pres_avgs
 ggsave("Charts/avg_admissions_by_pres.png", bar_pres_avgs)
+
+
+
+
+
+
+# Plot refugee admissions vs asylum grants
+asylees <- read.csv("Spreadsheets/DHS/total_asylees_fy2023.csv") %>%
+  clean_names() %>%
+  mutate(
+    across(
+      c(total_asylees, affirmative, defensive),
+      ~ str_remove_all(.x, ",") %>%
+        str_trim() %>%
+        as.numeric()
+    )
+  )
+refugees_asylees <- left_join(prm_totals, asylees) %>%
+  rename(total_refugees = total) %>%
+  select(-affirmative, -defensive) %>%
+  pivot_longer(cols = c(total_refugees, total_asylees), names_to = "type", values_to = "count")
+
+
+refugees_vs_asylees_graph <- ggplot(refugees_asylees) +
+  geom_line(aes(x = fiscal_year, y = count, color = type), linewidth = 1.1) +
+  scale_color_manual(values = c(
+                    total_refugees ="#7fc97f",
+                    total_asylees = "#beaed4"
+                    )) +
+  theme_minimal()
+
+refugees_vs_asylees_graph
+
+ggsave("Charts/refugees_vs_asylees.png", plot = refugees_vs_asylees_graph)
