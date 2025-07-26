@@ -6,21 +6,34 @@ Inspired by these current events, this research aims to assess the treatment of 
 
 
 ## Scripts
-### Script 1 - xlsx_to_csv
-This script converts all excel spreadsheets downloaded from various data sources into csvs. Cleaning and analysis for each dataset occurs in a separate script.
 
+### Primary Script - prm_analysis
+This is the primary script from which all analysis is conducted. Cleaned data from the 2024 Refugee Admissions Report from the Refugee Processing Center (located within the Bureau of Population, Refugees, and Migration) and from the 2023 Immigration Yearbook from the Office of Homeland Security Statistics (under the Department of Homeland Security). Data was cleaned first in excel, converted from xlsx to csv, and then imported into R for analysis. This script does some additional data cleaning and formating before creating several data visualizations. Analysis is primarily using the PRM data, but data on asylees from OHSS is used at the end of the script for a final comparison.
 
-### Script 2 - prm_analysis
-This script reads in and analyzes the 2024 Refugee Admissions Report from the Refugee Processing Center (located within the Bureau of Population, Refugees, and Migration).
 
 Link to RPC website: https://www.wrapsnet.org/admissions-and-arrivals/
 
-Link to download the excel: https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fwww.wrapsnet.org%2Fdocuments%2FPRM%2520Refugee%2520Admissions%2520Report%2520as%2520of%252031%2520Dec%25202024.xlsx&wdOrigin=BROWSELINK
+Link to download refugee admissions data: https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fwww.wrapsnet.org%2Fdocuments%2FPRM%2520Refugee%2520Admissions%2520Report%2520as%2520of%252031%2520Dec%25202024.xlsx&wdOrigin=BROWSELINK
 
 The excel download link should also be located on the RPC website in the event that the url becomes outdated with a future update. Under "Refugee Admissions Report" select "Refugee Admissions Report as of December 31, 2024."
-The script begins with copied code from xlsx_to_csv, followed by dataset cleaning and visual data analysis. Two line plots and one bar plot are included.
 
 
-### Script 3 - dhs_refugee_asylees
+Link to OHSS: https://ohss.dhs.gov/topics/immigration/yearbook
 
-Link: https://ohss.dhs.gov/topics/immigration/yearbook
+Link to download refugee arrivals data: https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fohss.dhs.gov%2Fsites%2Fdefault%2Ffiles%2F2024-11%2F2024_1108_ohss_yearbook_refugees_fy2023.xlsx&wdOrigin=BROWSELINK
+
+Link to download data on asylum grants: https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fohss.dhs.gov%2Fsites%2Fdefault%2Ffiles%2F2024-10%2F2024_1002_ohss_yearbook_asylees_fy2023.xlsx&wdOrigin=BROWSELINK 
+
+These datasets and others can be navigated from the OHSS link provided, especially as future annual yearbook reports are added.
+
+
+
+
+### Supplementary Script 1 - xlsx_to_csv
+This script converts all excel spreadsheets downloaded from various data sources into csvs. Cleaning and analysis for each dataset occurs in a separate script.
+
+
+
+
+### Supplementary Script 2 - dhs_refugee_asylees
+This script was used to evaluate if DHS refugee arrival numbers differed significantly from PRM refugee admissions numbers. No major discrepancies were found, so any further analysis was continued in the main script, prm_analysis.
