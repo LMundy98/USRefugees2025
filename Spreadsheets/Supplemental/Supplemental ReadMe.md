@@ -6,6 +6,12 @@ Data research organization based out of Syracuse University containing detailed 
 
 Link: https://tracreports.org/
 
+## DHS - Department of Homeland Security
+
+FY22 data on immigration enforcement. Appears to be non-specific to refugees. Obtained from the Office of Homeland Security Statistics. 
+
+Link: https://ohss.dhs.gov/topics/immigration/yearbook
+
 ## CBP - Customs and Border Patrol
 
 Data obtained from CBP on migrant encounters, primarily at the southern border. Was not specific to refugees/asylees, but could be useful in understanding use of force and overall agression trends.
