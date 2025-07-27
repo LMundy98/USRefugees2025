@@ -57,3 +57,9 @@ This script converts all excel spreadsheets downloaded from various data sources
 
 ### Supplementary Script 2 - dhs_refugee_asylees
 This script was used to evaluate if DHS refugee arrival numbers differed significantly from PRM refugee admissions numbers. No major discrepancies were found, so any further analysis was continued in the main script, prm_analysis.
+
+## Spreadsheets
+This folder contains the data used in this analysis. For more information on the data included inside, consult the readmes within the folder.
+
+## Charts
+This folder contains data visualizations produced in R. These are raw outputs, not polished in external editors.
