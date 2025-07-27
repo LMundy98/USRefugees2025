@@ -12,12 +12,12 @@ Data obtained from CBP on migrant encounters, primarily at the southern border. 
 
 Link: https://www.cbp.gov/newsroom/stats/cbp-public-data-portal
 
-Instructions for Retrieving Customs and Border Protection Use of Force Data 
+### Instructions for Retrieving Customs and Border Protection Use of Force Data 
 
-Visit the CBP Public Data Portal | U.S. Customs and Border Protection
+(1) Visit the CBP Public Data Portal | U.S. Customs and Border Protection
 
-Navigate to the “Accountability and Transparency” dropdown menu
+(2) Navigate to the “Accountability and Transparency” dropdown menu
 
-Under the column “Dataset and Data Dictionary,” select Use of Force Incidents and Officers/Agents Using Force and Use of Force by Type
+(3) Under the column “Dataset and Data Dictionary,” select Use of Force Incidents and Officers/Agents Using Force and Use of Force by Type
 
-Click the link to download the FY22-FY25 YTD data
+(4) Click the link to download the FY22-FY25 YTD data
