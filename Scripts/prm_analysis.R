@@ -13,7 +13,8 @@ library(ggplot2)
 # Cleaned csvs in excel before importing into R
 # PRM Refugee Admissions Report
 prm_refugee_admissions <- read.csv("Spreadsheets/PRM/cumulative_summary.csv") %>%
-  clean_names()
+  clean_names() %>%
+  select(-annual_average)
 
 # Creating df for presidential admins
 pres_admins <- data.frame(
@@ -28,8 +29,8 @@ prm_summary <- prm_refugee_admissions %>%
 prm_long <- prm_summary %>%
   pivot_longer(
     cols = -fiscal_year,
-    names_to = "Region",
-    values_to = "Admissions"
+    names_to = "region",
+    values_to = "admissions"
   )
 
 # Line colors
@@ -48,7 +49,7 @@ region_colors <- c(
 
 # Plotting line graph
 timeline <- ggplot(prm_long) +
-    geom_line(aes(x = fiscal_year, y = Admissions, color = Region), size = 1.1) +
+    geom_line(aes(x = fiscal_year, y = admissions, color = region), size = 1.1) +
   scale_x_continuous(breaks = seq(1975, 2025, by = 5)) +
   scale_y_continuous(
     limits = c(0,220000),
@@ -151,7 +152,7 @@ ggsave("Charts/total_admissions_1975_2025.png", timeline_total_only, width = 16,
 
 # Plotting line graph -- historical trends
 timeline_historical <- ggplot(prm_long) +
-  geom_line(aes(x = fiscal_year, y = Admissions, color = Region)) +
+  geom_line(aes(x = fiscal_year, y = admissions, color = region)) +
   scale_x_continuous(breaks = seq(1975, 2025, by = 5)) +
   scale_y_continuous(
     limits = c(0,220000),
@@ -171,6 +172,44 @@ ggsave("Charts/prm_admissions_timeline_historical.png", timeline_historical, wid
 
 
 
+
+
+# Plotting regions on separate graphs
+prm_facet <- prm_long %>%
+  filter(region != "total")
+
+timeline_facet <- ggplot(prm_facet) +
+  geom_line(
+    data = subset(prm_facet, region != "total"),
+    aes(x = fiscal_year, y = admissions, color = region),
+    linewidth = 1.1
+  ) +
+  facet_wrap(~ region, ncol = 3) + 
+  scale_x_continuous(breaks = seq(1975, 2025, by = 5)) +
+  scale_y_continuous(
+    limits = c(0, 220000),
+    labels = scales::unit_format(scale = 1/1000, unit = "K")
+  ) +
+  scale_color_manual(values = region_colors) +
+  theme_minimal() +
+  theme(legend.position = "none")
+timeline_facet
+ggsave("Charts/prm_admissions_facet.png", timeline_facet, width = 16, height = 9, units = "in", dpi = 300)
+
+timeline_facet_total <- ggplot(prm_refugee_admissions) +
+  geom_line(
+    aes(x = fiscal_year, y = total),
+    linewidth = 1.1
+  ) + 
+  scale_x_continuous(breaks = seq(1975, 2025, by = 5)) +
+  scale_y_continuous(
+    limits = c(0, 220000),
+    labels = scales::unit_format(scale = 1/1000, unit = "K")
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+timeline_facet_total
+ggsave("Charts/admissions_facet_total.png", timeline_facet_total, width = 16, height = 9, units = "in", dpi = 300)
 
 
 # Plotting Bar Graph
@@ -248,6 +287,12 @@ refugees_vs_asylees_graph <- ggplot(refugees_asylees) +
                     total_refugees ="#7fc97f",
                     total_asylees = "#beaed4"
                     )) +
+  scale_x_continuous(breaks = seq(1975, 2025, by = 5)) +
+  scale_y_continuous(
+    limits = c(0,220000),
+    labels = scales::unit_format(scale = 1/1000, unit="K"),
+    breaks = seq(0,220000, by = 25000)
+  ) +
   theme_minimal()
 
 refugees_vs_asylees_graph
