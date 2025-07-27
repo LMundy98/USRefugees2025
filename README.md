@@ -7,7 +7,6 @@ Inspired by these current events, this research aims to assess the treatment of 
 
 
 ## Scripts
-<br>
 
 ### Primary Script - prm_analysis
 This is the primary script from which all analysis is conducted. Cleaned data from the 2024 Refugee Admissions Report from the Refugee Processing Center (located within the Bureau of Population, Refugees, and Migration) and from the 2023 Immigration Yearbook from the Office of Homeland Security Statistics (under the Department of Homeland Security). Refugee ceiling data and a secondary source for refugee admissions comes from the Migration Policy Institute (MPI). Data was cleaned first in excel, converted from xlsx to csv, and then imported into R for analysis. This script does some additional data cleaning and formating before creating several data visualizations. Analysis is primarily using the PRM data, but data on asylees from OHSS is used at the end of the script for a final comparison.
