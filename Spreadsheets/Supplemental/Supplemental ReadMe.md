@@ -27,3 +27,7 @@ Link: https://www.cbp.gov/newsroom/stats/cbp-public-data-portal
 (3) Under the column “Dataset and Data Dictionary,” select Use of Force Incidents and Officers/Agents Using Force and Use of Force by Type
 
 (4) Click the link to download the FY22-FY25 YTD data
+
+### Census Folder
+
+Contains multiple tables generated from the American Community Survey. Data was not cleaned/condensed as more specific refugee data was found elsewhere.
