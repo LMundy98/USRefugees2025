@@ -135,10 +135,6 @@ timeline_total_only <- ggplot(prm_summary) +
     aes(xintercept = end_year),
     linetype = "dashed"
   ) +
-  geom_text(data = pres_admins,
-            aes(x = (start_year + end_year) / 2,
-                y = 220000,  
-                label = president))+
   theme_minimal()
 timeline_total_only
 ggsave("Charts/total_admissions_1975_2025.png", timeline_total_only, width = 16, height = 9, units = "in", dpi = 300)
@@ -175,6 +171,7 @@ ggsave("Charts/prm_admissions_timeline_historical.png", timeline_historical, wid
 
 
 # Plotting regions on separate graphs
+region_cols <- c("africa", "asia", "europe_central_asia", "near_east_sout")
 prm_facet <- prm_long %>%
   filter(region != "total")
 
@@ -230,19 +227,20 @@ pres_yrly_avg <- prm_totals_by_pres %>%
     total_admissions = sum(total, na.rm = TRUE)
     ) %>%
   arrange(term_start)
+write.csv(pres_yrly_avg, file = "Spreadsheets/president_average_admissions.csv")
 
 bar_pres_avgs <- ggplot(pres_yrly_avg) +
   geom_col(mapping = aes(x = reorder(president, term_start), y = avg_admissions, fill = president), show.legend = FALSE) +
   scale_fill_manual(values = c(
-    Ford = "#FF0000", 
-    Carter = "#0000FF", 
-    Reagan = "#FF0000",
-    Bush.Sr = "#FF0000", 
-    Clinton = "#0000FF", 
-    Bush.Jr = "#FF0000", 
-    Obama = "#0000FF", 
-    Trump = "#FF0000", 
-    Biden = "#0000FF"
+    Ford = "#e41a1c", 
+    Carter = "#386cb0", 
+    Reagan = "#e41a1c",
+    Bush.Sr = "#e41a1c", 
+    Clinton = "#386cb0", 
+    Bush.Jr = "#e41a1c", 
+    Obama = "#386cb0", 
+    Trump = "#e41a1c", 
+    Biden = "#386cb0"
   )) +
   scale_y_continuous(
     limits = c(0, 125000),
